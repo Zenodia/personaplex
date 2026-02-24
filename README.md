@@ -95,6 +95,29 @@ python -m moshi.offline \
   --output-text "output.json"
 ```
 
+### Query server from Python (no UI)
+
+To send a local WAV file to the **running** server and save the response as WAV (without using the Web UI), use the `query_server.py` script from the repo root:
+
+```bash
+# Install client deps (optional if you already have the full moshi env)
+pip install -r requirements-query-client.txt
+
+# Server must be running (e.g. Docker or: SSL_DIR=$(mktemp -d); python -m moshi.server --ssl "$SSL_DIR")
+python query_server.py \
+  --input-wav ./assets/test/input_service.wav \
+  --output-wav response.wav \
+  --output-text transcript.txt \
+  --voice-prompt NATF2.pt \
+  --text-prompt "You enjoy having a good conversation." \
+  --insecure
+```
+
+- `--insecure` is needed when the server uses a self-signed HTTPS certificate (default for local runs).
+- Optional: `--server wss://localhost:8998` (default), `--seed 42424242`, `--receive-timeout 60`.
+
+The script uses the same WebSocket protocol as the UI: Opus-encoded audio at 24 kHz. Input WAV is resampled to 24 kHz mono if needed; response audio is written as a standard WAV file.
+
 ## Voices
 
 PersonaPlex supports a wide range of voices; we pre-package embeddings for voices that sound more natural and conversational (NAT) and others that are more varied (VAR). The fixed set of voices are labeled:

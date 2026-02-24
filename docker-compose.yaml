@@ -1,5 +1,6 @@
 services:
   personaplex:
+    image: nv_persona:latest
     build:
       context: .
       dockerfile: Dockerfile

@@ -1,0 +1,5 @@
+# Minimal deps for query_server.py (send WAV to PersonaPlex server, save response WAV).
+# Use when you run the client without the full moshi environment.
+aiohttp>=3.10
+numpy>=1.26
+sphn>=0.1.4,<0.2
